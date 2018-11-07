@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Button, Text, StyleSheet, TouchableOpacity, Platform, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { deletePlace } from '../../store/actions/index'
@@ -11,19 +11,21 @@ class PlaceDetail extends Component {
   }
   render() {
     return (
-      <View style={styles.container} >
-        <View>
-          <Image source={this.props.selectedPlace.image} style={styles.placeImage} />
-          <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
+      <ScrollView>
+        <View style={styles.container} >
           <View>
-            <TouchableOpacity onPress={this.placeDeletedHandler}>
-              <View style={styles.deleteButton}>
-                <Icon size={30} name="ios-trash" color="red" />
-              </View>
-            </TouchableOpacity>
+            <Image source={this.props.selectedPlace.image} style={styles.placeImage} />
+            <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
+            <View>
+              <TouchableOpacity onPress={this.placeDeletedHandler}>
+                <View style={styles.deleteButton}>
+                  <Icon size={30} name={Platform.OS === 'android' ? "md-trash" : "ios-trash"} color="red" />
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }
